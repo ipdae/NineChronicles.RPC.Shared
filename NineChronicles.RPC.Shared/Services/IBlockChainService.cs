@@ -1,23 +1,24 @@
 using System.Collections.Generic;
+using System.Threading;
 using MagicOnion;
 
 namespace Nekoyume.Shared.Services
 {
     public interface IBlockChainService : IService<IBlockChainService>
     {
-        UnaryResult<bool> PutTransaction(byte[] txBytes);
+        UnaryResult<bool> PutTransaction(byte[] txBytes, CancellationToken shutdownToken);
 
-        UnaryResult<long> GetNextTxNonce(byte[] addressBytes);
+        UnaryResult<long> GetNextTxNonce(byte[] addressBytes, CancellationToken shutdownToken);
 
-        UnaryResult<byte[]> GetState(byte[] addressBytes);
+        UnaryResult<byte[]> GetState(byte[] addressBytes, CancellationToken shutdownToken);
 
-        UnaryResult<byte[]> GetBalance(byte[] addressBytes, byte[] currencyBytes);
+        UnaryResult<byte[]> GetBalance(byte[] addressBytes, byte[] currencyBytes, CancellationToken shutdownToken);
         
-        UnaryResult<byte[]> GetTip();
+        UnaryResult<byte[]> GetTip(CancellationToken shutdownToken);
 
-        UnaryResult<bool> SetAddressesToSubscribe(byte[] toByteArray, IEnumerable<byte[]> addressesBytes);
+        UnaryResult<bool> SetAddressesToSubscribe(byte[] toByteArray, IEnumerable<byte[]> addressesBytes, CancellationToken shutdownToken);
 
-        UnaryResult<bool> IsTransactionStaged(byte[] txidBytes);
+        UnaryResult<bool> IsTransactionStaged(byte[] txidBytes, CancellationToken shutdownToken);
 
         UnaryResult<bool> ReportException(string code, string message);
 
